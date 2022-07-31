@@ -16,7 +16,7 @@ def get_rss(url):
 
 
 def write_rss_xml(name, xml):
-    with open(name + ".xml", 'w+', encoding='UTF-8') as f:
+    with open("./rss/{}.xml".format(name), 'w+', encoding='UTF-8') as f:
         f.write(xml)
 
 
