@@ -2,6 +2,11 @@
 
 from requests import get
 import json
+import rtoml
+
+
+def parse_option():
+    config = rtoml.load("./config.toml")
 
 
 def get_data():
