@@ -8,4 +8,6 @@
 
 ## jsdelivr 代理链接
 
-- [夏日重现-诸神字幕组](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/夏日重现.xml)
+- [夏日重现](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/夏日重现.xml)
+- [神墓](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/神墓.xml)
+- [契约之吻](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/契约之吻.xml)
