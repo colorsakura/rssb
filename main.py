@@ -3,10 +3,12 @@
 from requests import get
 import json
 import rtoml
+import aiohttp
 
 
 def parse_option():
     config = rtoml.load("./config.toml")
+    return config["anime"]
 
 
 def get_data():
