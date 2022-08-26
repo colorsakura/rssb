@@ -5,7 +5,7 @@
 - [夏日重现](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/夏日重现.xml)
 - [神墓](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/神墓.xml)
 - [契约之吻](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/契约之吻.xml)
-
+- [异世界舅舅](https://cdn.jsdelivr.net/gh/colorsakura/rssb@latest/rss/异世界舅舅.xml)
 ## TODO
 
 - [x] 添加jsDelivr代理；
