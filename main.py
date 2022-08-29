@@ -7,8 +7,9 @@ import aiohttp
 
 
 def parse_option():
-    config = rtoml.load("./config.toml")
-    return config["anime"]
+    with open("./config.toml") as f:
+        config = rtoml.load(f)
+    return config
 
 
 def get_data():
@@ -28,9 +29,9 @@ def write_rss_xml(name, xml):
 
 
 def run():
-    rss_url = get_data()
-    for name, value in rss_url.items():
-        write_rss_xml(name, get_rss(value))
+    items = parse_option()["anime"]
+    for item in items:
+        write_rss_xml(item["name"], get_rss(item["url"]))
 
 
 if __name__ == '__main__':
