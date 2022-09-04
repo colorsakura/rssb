@@ -15,13 +15,13 @@ class Parser(xml.sax.handler.ContentHandler):
         self.page = ""
         self.date = ""
         self.size = ""
-        self.grabs = 0
+        self.grabs = ""
         self.link = ""
-        self.category = []
-        self.seeders = 0
-        self.peers = 0
-        self.downloadvolumefactor = 0
-        self.uploadvolumefactor = 0
+        self.category = ""
+        self.seeders = ""
+        self.peers = ""
+        self.downloadvolumefactor = ""
+        self.uploadvolumefactor = ""
 
     def startElement(self, name, attrs):
         # print("这是startElement: ", name)
@@ -40,8 +40,7 @@ class Parser(xml.sax.handler.ContentHandler):
     def characters(self, content):
         self._charBuffer.append(content)
         # print(self._charBuffer)
-        # if self.depth[-2:] == "item":
-        if 1:
+        if self.depth[len(self.depth) - 2] == "item":
             if self.tag == "title":
                 self.title = self._charBuffer
             elif self.tag == "guid":
@@ -52,7 +51,7 @@ class Parser(xml.sax.handler.ContentHandler):
                 self.type = self._charBuffer
             elif self.tag == "comments":
                 self.page = self._charBuffer
-            elif self.tag == "pubData":
+            elif self.tag == "pubDate":
                 self.date = self._charBuffer
             elif self.tag == "size":
                 self.size = self._charBuffer
@@ -61,7 +60,7 @@ class Parser(xml.sax.handler.ContentHandler):
             elif self.tag == "link":
                 self.link = self._charBuffer
             elif self.tag == "category":
-                self.category.append(self._charBuffer)
+                self.category = self._charBuffer
             else:
                 print("未处理元素")
         else:
@@ -70,28 +69,28 @@ class Parser(xml.sax.handler.ContentHandler):
     def endElement(self, name):
         self.tag = name
         # print("这是endElement: ", name)
-        if self.tag == self.depth[-1:]:
-            self.depth.pop()
         if self.tag == "item":
             item = {
-                "title": self.title,
-                "guid": self.guid,
-                "type": self.type,
-                "site": self.site,
-                "page": self.page,
-                "date": self.date,
-                "size": self.size,
-                "grab": self.grabs,
-                "link": self.link,
-                "category": self.category,
-                "seeders": self.seeders,
-                "peers": self.peers,
-                "downloadvolumefactor": self.downloadvolumefactor,
-                "uploadvolumefactor": self.uploadvolumefactor
+                "title": ''.join(self.title).strip(),
+                "guid": ''.join(self.guid).strip(),
+                "type": ''.join(self.type).strip(),
+                "site": ''.join(self.site).strip(),
+                "page": ''.join(self.page).strip(),
+                "date": ''.join(self.date).strip(),
+                "size": ''.join(self.size).strip(),
+                "grab": ''.join(self.grabs).strip(),
+                "link": ''.join(self.link).strip(),
+                "category": ''.join(self.category).strip(),
+                "seeders": ''.join(self.seeders).strip(),
+                "peers": self.peers.strip(),
+                "downloadvolumefactor": self.downloadvolumefactor.strip(),
+                "uploadvolumefactor": ''.join(self.uploadvolumefactor).strip()
             }
             self.result.append(item)
             self.clearField()
-        print(self.result)
+        # print(self.result)
+        if self.tag == self.depth[len(self.depth) - 1]:
+            self.depth.pop()
 
     def clearField(self):
         self.title = ""
@@ -101,15 +100,16 @@ class Parser(xml.sax.handler.ContentHandler):
         self.page = ""
         self.date = ""
         self.size = ""
-        self.grabs = 0
+        self.grabs = ""
         self.link = ""
-        self.category = []
-        self.seeders = 0
-        self.peers = 0
-        self.downloadvolumefactor = 0
-        self.uploadvolumefactor = 0
+        self.category = ""
+        self.seeders = ""
+        self.peers = ""
+        self.downloadvolumefactor = ""
+        self.uploadvolumefactor = ""
 
     def endDocument(self):
+        print(self.result)
         return self.result
 
 
