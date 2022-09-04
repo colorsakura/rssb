@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 class Jackett():
@@ -15,6 +16,7 @@ class Jackett():
         s = requests.Session()
         s.post(url, data=payload)
         self.cookie = s.cookies
+        print(self.cookie)
 
     def get_indexers(self):
         '''获取 Jackett Indexer
@@ -25,6 +27,11 @@ class Jackett():
         resp = requests.get(url, cookies=self.cookie)
         return resp.json()
 
+    def test_indexers(self):
+        indexers = self.get_indexers()
+        for indexer in indexers:
+            self.search(indexer['id'], "人形电脑天使心")
+
     def search(self, indexer, keywords, categories=5000):
         url = self.base_url + "/api/v2.0/indexers/{}/results/torznab/".format(indexer)
         payload = {'apikey': self.apikey, 't': 'search', 'q': keywords, 'cat': categories}
@@ -34,4 +41,8 @@ class Jackett():
 
 if __name__ == '__main__':
     jackett = Jackett()
-    print(jackett.search('acgrip', "异世界舅舅"))
+    indexers = jackett.get_indexers()
+    for indexer in indexers:
+        if not indexer['last_error']:
+            print(jackett.search(indexer['id'], "电影|剧场版"))
+

@@ -3,7 +3,6 @@
 from requests import get
 import json
 import rtoml
-import aiohttp
 
 
 def parse_option():

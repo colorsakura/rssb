@@ -1,11 +1,12 @@
 import xml.sax
+from array import array
 
 
 class Parser(xml.sax.handler.ContentHandler):
     def __init__(self):
         self._charBuffer = []
         self.tag = ""
-        self.depth = []     # 记录树
+        self.depth = []  # 记录树
         self.result = []
         self.title = ""
         self.guid = ""
@@ -107,6 +108,17 @@ class Parser(xml.sax.handler.ContentHandler):
         self.peers = 0
         self.downloadvolumefactor = 0
         self.uploadvolumefactor = 0
+
+    def endDocument(self):
+        return self.result
+
+
+def parserxml(xmlstring):
+    parser = xml.sax.parseString(xmlstring, handler=Parser())
+    # 重写 ContextHandler
+    Handler = Parser()
+
+    return parser
 
 
 if __name__ == '__main__':
