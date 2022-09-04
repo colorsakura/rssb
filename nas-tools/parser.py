@@ -1,5 +1,6 @@
 import xml.sax
-from array import array
+
+from utils import clean_string
 
 
 class Parser(xml.sax.handler.ContentHandler):
@@ -17,29 +18,25 @@ class Parser(xml.sax.handler.ContentHandler):
         self.size = ""
         self.grabs = ""
         self.link = ""
-        self.category = ""
+        self.category = []
         self.seeders = ""
         self.peers = ""
         self.downloadvolumefactor = ""
         self.uploadvolumefactor = ""
 
     def startElement(self, name, attrs):
-        # print("这是startElement: ", name)
         self._charBuffer = []
         self.tag = name
         self.depth.append(name)
         if self.tag == "item":
-            # print("开始解析xml内容")
             self.clearField()
 
     def _flushCharBuffer(self):
         s = ''.join(self._charBuffer)
-        # print(self._charBuffer)
         return s
 
     def characters(self, content):
         self._charBuffer.append(content)
-        # print(self._charBuffer)
         if self.depth[len(self.depth) - 2] == "item":
             if self.tag == "title":
                 self.title = self._charBuffer
@@ -60,7 +57,7 @@ class Parser(xml.sax.handler.ContentHandler):
             elif self.tag == "link":
                 self.link = self._charBuffer
             elif self.tag == "category":
-                self.category = self._charBuffer
+                self.category.append(''.join(self._charBuffer))
             else:
                 print("未处理元素")
         else:
@@ -68,28 +65,26 @@ class Parser(xml.sax.handler.ContentHandler):
 
     def endElement(self, name):
         self.tag = name
-        # print("这是endElement: ", name)
         if self.tag == "item":
             item = {
-                "title": ''.join(self.title).strip(),
-                "guid": ''.join(self.guid).strip(),
-                "type": ''.join(self.type).strip(),
-                "site": ''.join(self.site).strip(),
-                "page": ''.join(self.page).strip(),
-                "date": ''.join(self.date).strip(),
-                "size": ''.join(self.size).strip(),
-                "grab": ''.join(self.grabs).strip(),
-                "link": ''.join(self.link).strip(),
-                "category": ''.join(self.category).strip(),
-                "seeders": ''.join(self.seeders).strip(),
-                "peers": self.peers.strip(),
-                "downloadvolumefactor": self.downloadvolumefactor.strip(),
-                "uploadvolumefactor": ''.join(self.uploadvolumefactor).strip()
+                "title": clean_string(''.join(self.title)),
+                "guid": clean_string(''.join(self.guid)),
+                "type": clean_string(''.join(self.type)),
+                "site": clean_string(''.join(self.site)),
+                "page": clean_string(''.join(self.page)),
+                "date": clean_string(''.join(self.date)),
+                "size": clean_string(''.join(self.size)),
+                "grab": clean_string(''.join(self.grabs)),
+                "link": clean_string(''.join(self.link)),
+                "category": self.category,
+                "seeders": clean_string(''.join(self.seeders)),
+                "peers": clean_string(self.peers),
+                "downloadvolumefactor": clean_string(''.join(self.downloadvolumefactor)),
+                "uploadvolumefactor": clean_string(''.join(self.uploadvolumefactor))
             }
             self.result.append(item)
             self.clearField()
-        # print(self.result)
-        if self.tag == self.depth[len(self.depth) - 1]:
+        if self.tag == self.depth[-1]:
             self.depth.pop()
 
     def clearField(self):
@@ -102,14 +97,13 @@ class Parser(xml.sax.handler.ContentHandler):
         self.size = ""
         self.grabs = ""
         self.link = ""
-        self.category = ""
+        self.category = []
         self.seeders = ""
         self.peers = ""
         self.downloadvolumefactor = ""
         self.uploadvolumefactor = ""
 
     def endDocument(self):
-        print(self.result)
         return self.result
 
 
@@ -117,8 +111,7 @@ def parserxml(xmlstring):
     parser = xml.sax.parseString(xmlstring, handler=Parser())
     # 重写 ContextHandler
     Handler = Parser()
-
-    return parser
+    return Handler.result
 
 
 if __name__ == '__main__':
@@ -131,3 +124,4 @@ if __name__ == '__main__':
     parser.setContentHandler(Handler)
 
     parser.parse("test.xml")
+    print(Handler.result)
