@@ -59,7 +59,7 @@ class Parser(xml.sax.handler.ContentHandler):
             elif self.tag == "category":
                 self.category.append(''.join(self._charBuffer))
             else:
-                print("未处理元素")
+                pass
         else:
             pass
 
@@ -103,15 +103,12 @@ class Parser(xml.sax.handler.ContentHandler):
         self.downloadvolumefactor = ""
         self.uploadvolumefactor = ""
 
-    def endDocument(self):
-        return self.result
-
 
 def parserxml(xmlstring):
-    parser = xml.sax.parseString(xmlstring, handler=Parser())
+    handler = Parser()
+    parser = xml.sax.parseString(xmlstring, handler)
     # 重写 ContextHandler
-    Handler = Parser()
-    return Handler.result
+    return handler.result
 
 
 if __name__ == '__main__':

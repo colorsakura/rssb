@@ -16,7 +16,6 @@ class Jackett():
         s = requests.Session()
         s.post(url, data=payload)
         self.cookie = s.cookies
-        print(self.cookie)
 
     def get_indexers(self):
         '''获取 Jackett Indexer

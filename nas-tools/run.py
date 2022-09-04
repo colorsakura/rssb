@@ -8,8 +8,6 @@ if __name__ == '__main__':
     for indexer in indexers:
         print(indexer['last_error'])
         if not indexer['last_error']:
-            print(indexer['id'])
             xml = jackettIndexer.search(indexer['id'], keywords)
-            print(type(xml))
             anime = parserxml(xml)
             print(anime)
