@@ -48,7 +48,7 @@ def get_detail(tmdbid: int):
 
 
 @api.post('/subscribe/{tmdbid}')
-async def subscribe(tmdbid: int):
+async def subscribe(tmdbid: int, season: int):
     return {}
 
 

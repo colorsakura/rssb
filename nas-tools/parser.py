@@ -1,7 +1,5 @@
 import xml.sax
 
-from utils import clean_string
-
 
 class Parser(xml.sax.handler.ContentHandler):
     def __init__(self):
@@ -109,6 +107,13 @@ def parserxml(xmlstring):
     parser = xml.sax.parseString(xmlstring, handler)
     # 重写 ContextHandler
     return handler.result
+
+
+def clean_string(string):
+    string.strip()
+    string.replace('\n', '')
+    temp = ' '.join(string.split())
+    return temp
 
 
 if __name__ == '__main__':

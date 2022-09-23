@@ -33,9 +33,6 @@ class BangumiTV():
         :return:
         '''
         url = self.baseurl + "/v0/subjects/{}".format(bgid)
-        headers = {
-            "accept": "application/json"
-        }
         resp = requests.get(url, headers=self.headers)
         return resp.json()
 

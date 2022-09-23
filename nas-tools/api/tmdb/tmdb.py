@@ -1,14 +1,14 @@
 import requests
 
 
-class Tmdb():
+class Tmdb:
     def __init__(self):
         self.baseurl = 'https://api.themoviedb.org/3'
         self.headers = {
 
         }
         self.apikey = 'b35d09cd066aaa90e9f51448fd78cd90'
-        self.imgurl = 'https://image.tmdb.org/t/p/original'
+        self.img_ur = 'https://image.tmdb.org/t/p/original'
 
     def init(self):
         pass
@@ -32,9 +32,9 @@ class Tmdb():
         items = resp['results']
         for item in items:
             if item['backdrop_path'] is not None:
-                item['backdrop_path'] = self.imgurl + item['backdrop_path']
+                item['backdrop_path'] = self.img_ur + item['backdrop_path']
             if item['poster_path'] is not None:
-                item['poster_path'] = self.imgurl + item['poster_path']
+                item['poster_path'] = self.img_ur + item['poster_path']
         return items
 
     def search_movie(self, keyword):
@@ -53,6 +53,9 @@ class Tmdb():
         return tv + movie
 
     def search_by_tmdbid(self, tmdbid):
+        pass
+
+    def get_detail(self, tmdbid):
         pass
 
     def get_trand(self, media_type="tv", time_window="week"):
