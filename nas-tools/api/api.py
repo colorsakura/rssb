@@ -27,6 +27,11 @@ async def logout():
     return {}
 
 
+@api.get('/token')
+async def get_token():
+    return "ABCDEFG"
+
+
 @api.post('/register')
 async def register():
     pass

@@ -1,6 +1,5 @@
 requests
-aiohttp
 rtoml
 uvicorn
 fastapi
-tmdbv3api
+pydantic
